@@ -27,7 +27,7 @@ function useProxy(options) {
 				childProcess.execSync(`mkcert ${options.mkCert}`, {
 					input: "string",
 					stdio: "pipe",
-					cwd: path.normalize(__dirname)
+					cwd: path.normalize(process.cwd())
 				});
 				console.info(`Certificate for "${options.mkCert}" created and registered`)
 			}
@@ -54,8 +54,8 @@ function useProxy(options) {
 	let certToChoose = options.mkCert ?? options.certName
 	if (options.certName || options.mkCert) {
 		proxyOptions.ssl = {
-			key: fs.readFileSync(path.normalize(`${certToChoose}-key.pem`), 'utf-8'),
-			cert: fs.readFileSync(path.normalize(`${certToChoose}.pem`), 'utf-8')
+			key: fs.readFileSync(path.normalize(path.join(process.cwd(), `${certToChoose}-key.pem`)), 'utf-8'),
+			cert: fs.readFileSync(path.normalize(path.join(process.cwd(), `${certToChoose}.pem`)), 'utf-8')
 		};
 
 		PORT = 443;
