@@ -10,6 +10,7 @@ const childProcess = require('child_process');
 program
 	.option('-t, --target <target>', 'target for proxy to forward to')
 	.option('-c, --certName <certName>', 'cert name to use')
+	.option('-lp, --listenerPort <port>', 'port to listen on')
 	.option('-mkc, --mkCert <domain>', 'use mkcert for creating certs on the fly');
 
 program.parse(process.argv);
@@ -60,6 +61,7 @@ function useProxy(options) {
 		PORT = 443;
 	}
 
+	PORT = options.listenerPort ?? PORT;
 	return proxy.createProxyServer(proxyOptions).listen(PORT, () => {
 		console.log(`Proxy for http://${options.target} started on port ${options.certName !== undefined || options.mkCert !== undefined ? "https" : "http"}:${PORT}`)
 	});
