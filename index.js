@@ -47,7 +47,8 @@ function useProxy(options) {
 		target: {
 			host: host,
 			port: port ?? 80,
-		}
+		},
+                xfwd: true
 	}
 
 	let PORT = 80;
